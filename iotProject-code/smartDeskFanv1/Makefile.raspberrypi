@@ -1,0 +1,22 @@
+# Wyliodrin makefile
+
+.PHONY: build run clean
+
+CWD				=	$(shell pwd)
+BUILD_TARGETS 	=	ArduinoBuild
+RUN_TARGETS 	=	ArduinoRun
+
+build:$(BUILD_TARGETS)
+
+run: $(RUN_TARGETS)
+	rm -f node_modules
+	ln -s /wyliodrin/node-red/node_modules node_modules
+	node /wyliodrin/node-red/red.js -v main.streams
+
+clean:
+	
+ArduinoBuild:
+	mkdir /tmp/arduino_c05fa2bf-5698-46a9-9b1d-461d00d2108f_uno; cd Arduino && rm -f .build && ln -s /tmp/arduino_c05fa2bf-5698-46a9-9b1d-461d00d2108f_uno .build && ino build -m uno
+ArduinoRun:
+	cd Arduino && ino upload -m uno
+
